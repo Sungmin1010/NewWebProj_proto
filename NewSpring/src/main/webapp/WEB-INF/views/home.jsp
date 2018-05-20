@@ -41,12 +41,12 @@
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" action="login.sp" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputNickname" class="sr-only">Nick Name</label>
+        <input type="text" id="inputNickname" name="nick" class="form-control" placeholder="Nick Name" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword" name="pwd" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me

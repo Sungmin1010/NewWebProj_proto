@@ -1,9 +1,13 @@
 package com.spring.example;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -45,14 +49,26 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login.sp")
-	public String login(userVO vo, HttpSession session) {
+	public String login(userVO vo, HttpSession session, HttpServletResponse resp) {
 		logger.info("Member Login !!!"+ vo);
+		String view = null;
 		int res = biz.login(vo, session);
 		if(res==1) {
-			return "memberHome";
+			view =  "memberHome";
 		}else {
-			return "home";
+			resp.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = null;
+            try {
+				out = resp.getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            out.println("<script>alert('로그인 실패 : 다시 시도해 주세요'); history.go(-1);</script>");
+            out.flush();
+			
+			//view = "home";
 		}
 		
+		return view;
 	}
 }

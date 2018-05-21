@@ -17,14 +17,21 @@ public class UserBiz {
 	public int login(userVO vo, HttpSession session) {
 		int res;
 		userVO dbUserInfo = dao.login(vo);
-		if(vo.getPwd().equals(dbUserInfo.getPwd())) {
-			//correct pwd
-			session.setAttribute("userInfo", dbUserInfo);
-			res = 1;
-		}else {
-			//incorrect pwd
-			res = 0;
+		try {
+			
+			if(vo.getPwd().equals(dbUserInfo.getPwd())) {
+				//correct pwd
+				session.setAttribute("userInfo", dbUserInfo);
+				res = 1;
+			}else {
+				//incorrect pwd
+				res = 0;
+			}
+			
+		}catch(NullPointerException e) {
+			res=0;
 		}
+		
 		return res;
 	}
 	

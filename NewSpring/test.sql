@@ -30,6 +30,7 @@ create table tb_file(
   bseq int
 )
 
+
 create table tb_reply(
   rseq int primary key AUTO_INCREMENT,
   bseq int,
@@ -51,7 +52,10 @@ show tables
 
 insert into tb_user(nick, email, pwd) values('testNick', 'test@mail.com', '0000');
 select nick, email, pwd from tb_user where nick='testNick';
-
+insert into tb_board(title, content, hit, useq) values('test post title', 'This is my first board', 0, 1 );
+select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq;
+select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=1;
 ======================================================
 
 select * from tb_user;
+select * from tb_board;

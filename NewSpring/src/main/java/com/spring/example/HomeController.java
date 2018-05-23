@@ -71,4 +71,14 @@ public class HomeController {
 		
 		return view;
 	}
+	
+	@RequestMapping(value="/memberHome.sp")
+	public String memberHome(HttpSession session) {
+		logger.info("Member Home");
+		if(session.getAttribute("userInfo") != null) {
+			return "memberHome";
+		}else {
+			return "home";
+		}
+	}
 }

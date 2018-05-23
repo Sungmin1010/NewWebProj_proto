@@ -42,10 +42,24 @@
     </nav>
 
      <main role="main" class="container">
+		<div class="card-deck mb-3 py-3">
+			<div class="card mb-4 box-shadow">
+				<div class="card-body">
+				<h3 class="card-title">${vo.title}</h5>
+				<p class="card-title">${vo.nick}</p>
+				<p class="card-text text-right"><small class="text-muted">${vo.datetime }</small></p>
+				<p class="card-text">${vo.content }</p>
+				</div>
+			</div>
+		</div>
+		
 		<div class="card-deck mb-3">
 			<div class="card mb-4 box-shadow">
-				<div class="card-header">${vo.title }</div>
-				<div class="card-body">${vo.content }</div>
+				<div class="card-header">COMMENT</div>
+				<div class="card-body">
+				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
+				<p class="card-text">${vo.content }</p>
+				</div>
 			</div>
 		</div>
 

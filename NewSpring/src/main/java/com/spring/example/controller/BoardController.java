@@ -21,9 +21,8 @@ public class BoardController {
 	private BoardBiz biz;
 	
 	@RequestMapping(value="/boardList.sp")
-	public String boardList(Model model) {
+	public String boardList(Model model){
 		logger.info("user into the boardList page");
-		
 		model.addAttribute("voList", biz.selectBoardList());
 		
 		return "boardList";

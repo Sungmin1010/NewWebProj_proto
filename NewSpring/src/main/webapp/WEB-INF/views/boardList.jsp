@@ -58,9 +58,9 @@
   </thead>
   <tbody>
     
-    <c:forEach items="${voList}" var="vo">
+    <c:forEach items="${voList}" var="vo" varStatus="sta">
     <tr onclick="window.location='getBoard.sp?bseq=${vo.bseq}';">
-      <th scope="row">${vo.bseq}</th>
+      <th scope="row">${sta.count}</th>
       <td>${vo.title}</td>
       <td>${vo.nick }</td>
       <td>${vo.datetime }</td>

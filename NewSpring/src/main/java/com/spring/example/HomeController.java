@@ -29,6 +29,8 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+
+	
 	@Autowired
 	private UserBiz biz;
 	/**
@@ -42,7 +44,7 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
+		logger.debug("인터셉터 테스트");
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";

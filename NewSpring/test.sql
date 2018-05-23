@@ -46,3 +46,12 @@ alter table tb_reply add constraint fk_reply_useq foreign key(useq) references t
 
 drop table tablename;
 show tables
+
+=====================================================
+
+insert into tb_user(nick, email, pwd) values('testNick', 'test@mail.com', '0000');
+select nick, email, pwd from tb_user where nick='testNick';
+
+======================================================
+
+select * from tb_user;

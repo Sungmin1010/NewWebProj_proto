@@ -95,3 +95,4 @@ Servers/Tomcat v8.5 Server at localhost-config/server.xml
 Servers/Tomcat v8.5 Server at localhost-config/context.xml
 Servers/Tomcat v8.5 Server at localhost-config/catalina.properties
 Servers/Tomcat v8.5 Server at localhost-config/catalina.policy
+NewSpring/target/m2e-wtp/web-resources/META-INF/maven/com.spring/example/pom.properties

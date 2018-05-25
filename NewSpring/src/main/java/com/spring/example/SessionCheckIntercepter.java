@@ -14,15 +14,6 @@ public class SessionCheckIntercepter extends HandlerInterceptorAdapter{
 	
 	protected Logger log = LoggerFactory.getLogger(SessionCheckIntercepter.class);
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		
-		if(log.isDebugEnabled()) {
-			log.debug("================  STOP  ");
-		}
-		super.postHandle(request, response, handler, modelAndView);
-	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

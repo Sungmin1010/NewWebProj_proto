@@ -52,7 +52,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/login.sp")
+	@RequestMapping(value="/home", method=RequestMethod.POST)
 	public String login(userVO vo, HttpSession session, HttpServletResponse resp) {
 		logger.info("Member Login !!!"+ vo);
 		String view = null;
@@ -76,7 +76,7 @@ public class HomeController {
 		return view;
 	}
 	
-	@RequestMapping(value="/memberHome.sp")
+	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public String memberHome(HttpSession session) {
 		logger.info("Member Home");
 		if(session.getAttribute("userInfo") != null) {

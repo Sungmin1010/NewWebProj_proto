@@ -21,8 +21,9 @@ public class BoardBiz {
 		return dao.selectBoardList();
 	}
 	
-	public BoardListVO selectBoard(HttpServletRequest req) {
+	public BoardListVO selectBoard(int bseq) {
 		//increase hit 
-		return dao.selectBoard(Integer.parseInt(req.getParameter("bseq")));
+		
+		return dao.selectBoard(bseq);
 	}
 }

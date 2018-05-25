@@ -29,10 +29,10 @@
       <div class="collapse navbar-collapse" id="navbarsExample02">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="memberHome.sp">Home</a>
+            <a class="nav-link" href="/home">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="boardList.sp">BOARD <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/home/boards">BOARD <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-md-0">
@@ -59,7 +59,7 @@
   <tbody>
     
     <c:forEach items="${voList}" var="vo" varStatus="sta">
-    <tr onclick="window.location='getBoard.sp?bseq=${vo.bseq}';">
+    <tr onclick="window.location='/home/boards/${vo.bseq}';">
       <th scope="row">${sta.count}</th>
       <td>${vo.title}</td>
       <td>${vo.nick }</td>

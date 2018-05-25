@@ -21,7 +21,7 @@
 
   <body class="text-center">
 
-    <form class="form-signin" action="login.sp" method="Post">
+    <form class="form-signin" action="home" method="Post">
       <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputNickname" class="sr-only">Nick Name</label>

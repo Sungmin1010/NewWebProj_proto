@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.example.biz.BoardBiz;
+import com.spring.example.vo.BoardListVO;
 
 @Controller
 public class BoardController {
@@ -20,7 +24,7 @@ public class BoardController {
 	@Autowired
 	private BoardBiz biz;
 	
-	@RequestMapping(value="/boardList.sp")
+	@RequestMapping(value="/home/boards", method=RequestMethod.GET)
 	public String boardList(Model model){
 		logger.info("user into the boardList page");
 		model.addAttribute("voList", biz.selectBoardList());
@@ -29,12 +33,11 @@ public class BoardController {
 		
 	}
 	
-	@RequestMapping(value="/getBoard.sp", method=RequestMethod.GET)
-	public String getBoard(HttpServletRequest req, Model model) {
-		logger.info("user select post");
-		System.out.println(req.getParameter("bseq"));
-		
-		model.addAttribute("vo", biz.selectBoard(req));
+	@RequestMapping(value="/home/boards/{bseq}", method=RequestMethod.GET)
+	public String getBoard(@PathVariable int bseq, HttpServletRequest req, Model model) {
+		logger.info("user select post URI {}", req.getRequestURI());
+		 
+		model.addAttribute("vo", biz.selectBoard(bseq));
 		
 		
 		return "getBoard";

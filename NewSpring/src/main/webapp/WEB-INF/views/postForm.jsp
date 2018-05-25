@@ -41,28 +41,42 @@
     </nav>
 
      <main role="main" class="container">
-		<div class="card-deck mb-3 py-3">
-			<div class="card mb-4 box-shadow">
-				<div class="card-body">
-				<h3 class="card-title">${vo.title}</h5>
-				<p class="card-title">${vo.nick}</p>
-				<p class="card-text text-right"><small class="text-muted">${vo.datetime }</small></p>
-				<p class="card-text">${vo.content }</p>
-				</div>
-			</div>
-		</div>
-		
-		<div class="card-deck mb-3">
-			<div class="card mb-4 box-shadow">
-				<div class="card-header">COMMENT</div>
-				<div class="card-body">
-				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
-				<p class="card-text">${vo.content }</p>
-				</div>
-			</div>
-		</div>
-
-
+     <div class="py-5 text-center">
+        <h2>New Post</h2>
+        <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      </div>
+     
+     <form action="/boards" method="post">
+       <div class="form-group row">
+         <label for="staticNickname" class="col-sm-2 col-form-label">Nick Name</label>
+         <div class="col-sm-10">
+           <input type="text" readonly class="form-control-plaintext" id="staticNickname" value="${userInfo.nick}"/>
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+         <div class="col-sm-10">
+           <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title">
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label">Content</label>
+         <div class="col-sm-10">
+           <textarea style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="5" name="content"></textarea>
+         </div>
+       </div>
+       <!-- <div class="form-group row">
+         <label for="exampleFormControlFile1" class="col-sm-2 col-form-label">Example file input</label>
+         <div class="col-sm-10">
+           <input type="file" class="form-control-file" id="exampleFormControlFile1">
+         </div>
+       </div> file upload form  -->
+       
+       <div class="form-group row justify-content-center">
+         <button class="btn btn-lg btn-primary btn-block col-sm-5" type="submit">Submit</button>
+       </div>
+       
+</form>
 
     </main> <!-- //container -->
 

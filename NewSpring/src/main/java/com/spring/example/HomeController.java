@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.example.biz.UserBiz;
-import com.spring.example.vo.userVO;
+import com.spring.example.vo.UserVO;
 
 /**
  * Handles requests for the application home page.
@@ -53,7 +53,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/home", method=RequestMethod.POST)
-	public String login(userVO vo, HttpSession session, HttpServletResponse resp) {
+	public String login(UserVO vo, HttpSession session, HttpServletResponse resp) {
 		logger.info("Member Login !!!"+ vo);
 		String view = null;
 		int res = biz.login(vo, session);
@@ -78,7 +78,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/home", method=RequestMethod.GET)
 	public String memberHome(HttpSession session) {
-		logger.info("Member Home");
+		logger.info("Member Home {}",session.getAttribute("userInfo"));
 		if(session.getAttribute("userInfo") != null) {
 			return "memberHome";
 		}else {

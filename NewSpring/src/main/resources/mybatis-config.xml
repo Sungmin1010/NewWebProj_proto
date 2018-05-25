@@ -4,8 +4,9 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
     <configuration>
     	<typeAliases>
-            <typeAlias type="com.spring.example.vo.userVO" alias="userVO"/>
+            <typeAlias type="com.spring.example.vo.UserVO" alias="userVO"/>
             <typeAlias type="com.spring.example.vo.BoardListVO" alias="BoardListVO"/>
+            <typeAlias type="com.spring.example.vo.BoardVO" alias="BoardVO"/>
         </typeAliases>
 
  

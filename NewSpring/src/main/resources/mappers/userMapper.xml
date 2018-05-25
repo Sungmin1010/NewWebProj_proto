@@ -4,21 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="userMapper">
- 
 
-    
     <select id="selectUser" parameterType="userVO" resultType="userVO">
-    select nick, email, pwd from tb_user
+    select useq, nick, email, pwd from tb_user
     where nick=#{nick}
     </select>
     
+    <select id="countBoard" resultType="int">
+    select count(*)
+    </select>
+    
     <select id="selectBoardList" resultType="BoardListVO">
-    select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq
+    select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq order by bseq desc
     </select>
     
     <select id="selectBoard" parameterType="int" resultType="BoardListVO">
     select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=#{bseq}
     </select>
 
+	<insert id="insertBoard" parameterType="BoardVO">
+	insert into tb_board(title, content, hit, useq) values(#{title}, #{content}, 0, #{useq})
+	</insert>
 
 </mapper>

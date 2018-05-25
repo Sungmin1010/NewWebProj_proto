@@ -5,12 +5,12 @@ import java.sql.Date;
 public class BoardVO {
 	
 	private int bseq;
-	private String title;
-	private String content;
+	private String title;//
+	private String content;//
 	private Date datetime;
 	private int bstatus;
-	private int hit;
-	private int useq;
+	private int hit;//
+	private int useq;//
 	public BoardVO() {
 		super();
 		// TODO Auto-generated constructor stub

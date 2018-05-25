@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +33,7 @@
             <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/home/boards">BOARD</a>
+            <a class="nav-link" href="/boards">BOARD</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-md-0">
@@ -45,7 +44,9 @@
     
     <main role="main" class="container">
     <h1>Welcom Member!!</h1>
-    
+    <h3>${sessionScope.userInfo.nick}</h3>
+    <h3>${userInfo.email}</h3>
+    <h3>${userInfo.useq}</h3>
     </main>
 
 

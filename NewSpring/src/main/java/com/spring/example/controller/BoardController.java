@@ -1,6 +1,7 @@
 package com.spring.example.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.example.biz.BoardBiz;
 import com.spring.example.vo.BoardListVO;
+import com.spring.example.vo.BoardVO;
 
 @Controller
 public class BoardController {
@@ -24,16 +26,29 @@ public class BoardController {
 	@Autowired
 	private BoardBiz biz;
 	
-	@RequestMapping(value="/home/boards", method=RequestMethod.GET)
-	public String boardList(Model model){
+	@RequestMapping(value="/boards", method=RequestMethod.GET)  ///boards?page={page}&count={count}
+	public String boardList(Model model){ //@PathVariable int page, @PathVariable int count
 		logger.info("user into the boardList page");
-		model.addAttribute("voList", biz.selectBoardList());
+		int page=1;
+		int count=2;
+		model.addAttribute("voList", biz.selectBoardList(page, count));
 		
 		return "boardList";
 		
 	}
 	
-	@RequestMapping(value="/home/boards/{bseq}", method=RequestMethod.GET)
+	@RequestMapping(value="/boards", method=RequestMethod.POST)
+	public ModelAndView newBoard(BoardVO vo, ModelAndView mv, HttpSession session){
+		logger.info("user add new board {}", vo);
+		//insert board
+		int res = biz.insertBoard(session, vo);
+		mv.setViewName("redirect:/boards");
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="/boards/{bseq}", method=RequestMethod.GET)
 	public String getBoard(@PathVariable int bseq, HttpServletRequest req, Model model) {
 		logger.info("user select post URI {}", req.getRequestURI());
 		 
@@ -41,6 +56,12 @@ public class BoardController {
 		
 		
 		return "getBoard";
+	}
+	
+	@RequestMapping(value="/boards/new", method=RequestMethod.GET)
+	public String newBoard() {
+		logger.info("user get new board form");
+		return "postForm";
 	}
 
 }

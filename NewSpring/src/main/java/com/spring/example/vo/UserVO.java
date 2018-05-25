@@ -1,13 +1,13 @@
 package com.spring.example.vo;
 
-public class userVO {
+public class UserVO {
 	
 	private int useq;
 	private String nick;
 	private String email;
 	private String pwd;
 	private int ustatus;
-	public userVO(int useq, String nick, String email, String pwd, int ustatus) {
+	public UserVO(int useq, String nick, String email, String pwd, int ustatus) {
 		super();
 		this.useq = useq;
 		this.nick = nick;
@@ -15,7 +15,7 @@ public class userVO {
 		this.pwd = pwd;
 		this.ustatus = ustatus;
 	}
-	public userVO() {
+	public UserVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -51,7 +51,7 @@ public class userVO {
 	}
 	@Override
 	public String toString() {
-		return "userVO [useq=" + useq + ", nick=" + nick + ", email=" + email + ", pwd=" + pwd + ", ustatus=" + ustatus
+		return "UerVO [useq=" + useq + ", nick=" + nick + ", email=" + email + ", pwd=" + pwd + ", ustatus=" + ustatus
 				+ "]";
 	}
 	

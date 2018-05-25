@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +31,7 @@
             <a class="nav-link" href="/home">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="/home/boards">BOARD <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/boards">BOARD <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-md-0">
@@ -42,6 +41,12 @@
     </nav>
 
      <main role="main" class="container">
+     <div class="my-3">
+     	<div class="h1">
+     	BOARD <button type="button" class="btn btn-primary" onclick="window.location='/boards/new';"> + NEW </button><h3>${sessionScope.userInfo.nick}</h3>
+     	</div>
+     	
+     </div>
 
 <div class="table-responsive">
 
@@ -59,7 +64,7 @@
   <tbody>
     
     <c:forEach items="${voList}" var="vo" varStatus="sta">
-    <tr onclick="window.location='/home/boards/${vo.bseq}';">
+    <tr onclick="window.location='/boards/${vo.bseq}';">
       <th scope="row">${sta.count}</th>
       <td>${vo.title}</td>
       <td>${vo.nick }</td>
@@ -70,6 +75,15 @@
     
   </tbody>
 </table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
 </div>
 
     </main> <!-- //container -->

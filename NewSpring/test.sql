@@ -55,7 +55,25 @@ select nick, email, pwd from tb_user where nick='testNick';
 insert into tb_board(title, content, hit, useq) values('test post title', 'This is my first board', 0, 1 );
 select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq;
 select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=1;
+select * from tb_user where nick='testNick';
 ======================================================
 
 select * from tb_user;
-select * from tb_board;
+select * from tb_board order by bseq desc;
+
+
+insert into tb_board(title, content, hit, useq) values('test3', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test4', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test5', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test6', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test7', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test8', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test9', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test10', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test11', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test12', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('test13', 'This is my first board', 0, 1 );
+
+
+
+

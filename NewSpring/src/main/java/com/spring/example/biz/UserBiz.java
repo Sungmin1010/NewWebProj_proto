@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.example.dao.UserDao;
-import com.spring.example.vo.userVO;
+import com.spring.example.vo.UserVO;
 
 @Service
 public class UserBiz {
@@ -14,13 +14,14 @@ public class UserBiz {
 	@Autowired
 	private UserDao dao;
 	
-	public int login(userVO vo, HttpSession session) {
+	public int login(UserVO vo, HttpSession session) {
 		int res;
-		userVO dbUserInfo = dao.login(vo);
+		UserVO dbUserInfo = dao.login(vo);
 		try {
 			
 			if(vo.getPwd().equals(dbUserInfo.getPwd())) {
 				//correct pwd
+				System.out.println(dbUserInfo);
 				session.setAttribute("userInfo", dbUserInfo);
 				res = 1;
 			}else {

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.example.Paging;
 import com.spring.example.controller.BoardController;
 import com.spring.example.dao.BoardDao;
 import com.spring.example.vo.BoardListVO;
@@ -23,10 +24,15 @@ public class BoardBiz {
 	@Autowired
 	private BoardDao dao;
 	
-	public List<BoardListVO> selectBoardList(int page, int count){
+	public List<BoardListVO> selectBoardList(Paging page){
 		//remake datetime format
-		int start = count*(page-1)+1; //select 1~count, ...
-		return dao.selectBoardList(start, count);
+		//int start = count*(page-1)+1; //select 1~count, ...
+		//return dao.selectBoardList(start, count);
+		
+		return dao.listPage(page);
+	}
+	public int listCountPage(Paging page) {
+		return dao.countPaging(page);
 	}
 	
 	public BoardListVO selectBoard(int bseq) {

@@ -25,5 +25,13 @@
 	<insert id="insertBoard" parameterType="BoardVO">
 	insert into tb_board(title, content, hit, useq) values(#{title}, #{content}, 0, #{useq})
 	</insert>
+	
+	<select id="selectPageList" parameterType="Paging" resultType="BoardListVO">
+	select * from tb_board order by bseq desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="countPaging" resultType="int">
+	select count(bseq) from tb_board
+	</select>
 
 </mapper>

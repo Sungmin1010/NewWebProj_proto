@@ -74,6 +74,7 @@ insert into tb_board(title, content, hit, useq) values('test11', 'This is my fir
 insert into tb_board(title, content, hit, useq) values('test12', 'This is my first board', 0, 1 );
 insert into tb_board(title, content, hit, useq) values('test13', 'This is my first board', 0, 1 );
 
+select * from tb_board order by bseq desc limit 0, 10;
 
 
 

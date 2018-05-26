@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.example.Paging;
 import com.spring.example.vo.BoardListVO;
 import com.spring.example.vo.BoardVO;
 
@@ -28,8 +29,13 @@ public class BoardDao {
 	public int insertBoard(BoardVO vo) {
 		int res = sqlSession.insert("userMapper.insertBoard", vo);
 		return res;
-		
-		
+	}
+	
+	public List<BoardListVO> listPage(Paging page){
+		return sqlSession.selectList("userMapper.selectPageList", page);
+	}
+	public int countPaging(Paging page) {
+		return sqlSession.selectOne("userMapper.countPaging", page);
 	}
 
 }

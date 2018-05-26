@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.example.PageMaker;
+import com.spring.example.Paging;
 import com.spring.example.biz.BoardBiz;
 import com.spring.example.vo.BoardListVO;
 import com.spring.example.vo.BoardVO;
@@ -27,11 +29,16 @@ public class BoardController {
 	private BoardBiz biz;
 	
 	@RequestMapping(value="/boards", method=RequestMethod.GET)  ///boards?page={page}&count={count}
-	public String boardList(Model model){ //@PathVariable int page, @PathVariable int count
+	public String boardList(Paging page, Model model){ //@PathVariable int page, @PathVariable int count
 		logger.info("user into the boardList page");
-		int page=1;
-		int count=2;
-		model.addAttribute("voList", biz.selectBoardList(page, count));
+		logger.info(page.toString());
+		model.addAttribute("voList", biz.selectBoardList(page));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPage(page);
+		//pageMaker.setTotalCount(13);
+		pageMaker.setTotalCount(biz.listCountPage(page));
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "boardList";
 		

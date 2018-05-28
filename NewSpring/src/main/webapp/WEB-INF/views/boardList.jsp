@@ -12,7 +12,7 @@
     <title>Signin Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <%-- <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet"> --%>
@@ -79,16 +79,13 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
   	<c:if test="${pageMaker.prev}">
-  		<li class="page-item"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+  		<li class="page-item"><a class="page-link" href="boards?${pageMaker.makeQuery(pageMaker.startPage-1)}" tabindex="-1">Previous</a></li>
   	</c:if>
     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-    	<li class="page-item" <c:out value="${pageMaker.page.page ==idx?'class=active':'' }"/>>
+    	<li class="page-item <c:out value="${pageMaker.paging.page == idx ? 'active':''}"/> ">
     	
-    	<a class="page-link" href="boards?page=${idx}">${idx}</a></li>
+    	<a class="page-link" href="boards${pageMaker.makeQuery(idx)}">${idx}</a></li>
     </c:forEach>
-    
-    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
     
     <c:if test="$pageMaker.next && pageMaker.endPage > 0">
     	<li class="page-item"><a class="page-link" href="#">Next</a></li>

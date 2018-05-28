@@ -24,15 +24,13 @@ public class BoardBiz {
 	@Autowired
 	private BoardDao dao;
 	
-	public List<BoardListVO> selectBoardList(Paging page){
-		//remake datetime format
-		//int start = count*(page-1)+1; //select 1~count, ...
-		//return dao.selectBoardList(start, count);
+	public List<BoardListVO> selectBoardList(Paging paging){
 		
-		return dao.listPage(page);
+		return dao.listPage(paging);
 	}
-	public int listCountPage(Paging page) {
-		return dao.countPaging(page);
+	
+	public int listCountPage(Paging paging) {
+		return dao.countPaging(paging);
 	}
 	
 	public BoardListVO selectBoard(int bseq) {

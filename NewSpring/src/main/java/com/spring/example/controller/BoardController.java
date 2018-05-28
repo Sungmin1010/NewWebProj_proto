@@ -28,16 +28,16 @@ public class BoardController {
 	@Autowired
 	private BoardBiz biz;
 	
-	@RequestMapping(value="/boards", method=RequestMethod.GET)  ///boards?page={page}&count={count}
-	public String boardList(Paging page, Model model){ //@PathVariable int page, @PathVariable int count
+	@RequestMapping(value="/boards", method=RequestMethod.GET)
+	public String boardList(Paging paging, Model model){ 
 		logger.info("user into the boardList page");
-		logger.info(page.toString());
-		model.addAttribute("voList", biz.selectBoardList(page));
+		logger.info(paging.toString());
+		model.addAttribute("voList", biz.selectBoardList(paging));
 		
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setPage(page);
+		pageMaker.setPaging(paging);
 		//pageMaker.setTotalCount(13);
-		pageMaker.setTotalCount(biz.listCountPage(page));
+		pageMaker.setTotalCount(biz.listCountPage(paging));
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "boardList";

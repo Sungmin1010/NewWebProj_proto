@@ -31,11 +31,11 @@ public class BoardDao {
 		return res;
 	}
 	
-	public List<BoardListVO> listPage(Paging page){
-		return sqlSession.selectList("userMapper.selectPageList", page);
+	public List<BoardListVO> listPage(Paging paging){
+		return sqlSession.selectList("userMapper.selectPageList", paging);
 	}
-	public int countPaging(Paging page) {
-		return sqlSession.selectOne("userMapper.countPaging", page);
+	public int countPaging(Paging paging) {
+		return sqlSession.selectOne("userMapper.countPaging", paging);
 	}
 
 }

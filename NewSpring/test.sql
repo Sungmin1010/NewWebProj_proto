@@ -59,6 +59,7 @@ select * from tb_user where nick='testNick';
 ======================================================
 
 select * from tb_user;
+select * from tb_file;
 select * from tb_board order by bseq desc;
 
 

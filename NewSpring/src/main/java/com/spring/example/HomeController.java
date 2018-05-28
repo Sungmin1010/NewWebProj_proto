@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.example.biz.UserBiz;
 import com.spring.example.vo.UserVO;
@@ -88,6 +89,18 @@ public class HomeController {
 		}else {
 			return "home";
 		}
+	}
+	
+	@RequestMapping(value="/user/edit", method=RequestMethod.POST)
+	public void uploadForm(MultipartFile file, Model model) {
+		logger.info("originalName: " + file.getOriginalFilename());
+		logger.info("size : " + file.getSize());
+		logger.info("contentType ; " + file.getContentType());
+	}
+	
+	@RequestMapping(value="/user/edit", method=RequestMethod.GET)
+	public String uploadForm() {
+		return "editProfileImg";
 	}
 	
 	

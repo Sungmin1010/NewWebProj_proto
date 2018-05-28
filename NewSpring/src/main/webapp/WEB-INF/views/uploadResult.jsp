@@ -43,18 +43,8 @@
     </nav>
     
     <main role="main" class="container">
-    <div class="row">
-    	<div class="col-sm-12 text-center py-5">
-    	<h1 class="">Welcom Member!!</h1>
-    		<img class="rounded-circle" src="${pageContext.request.contextPath}/resources/img/sample.png" width="140" height="140"><br>
-    		<a href="/user/edit" class="btn btn-secondary btn-sm my-2">edit</a>
-    		<h2>${sessionScope.userInfo.nick}</h2>
-    		<h3>${userInfo.email}</h3>
-    		<h3>${userInfo.useq}</h3>
-    		<button type="button" class="btn btn-danger" onclick="window.location='/';">Logout</button>
-    		
-    	</div>
-    </div>
+    <h1>파일이 업로드 되었습니다.</h1>
+    파일명 : ${savedName}
     </main>
 
 

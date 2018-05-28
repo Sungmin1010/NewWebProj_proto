@@ -33,5 +33,9 @@
 	<select id="countPaging" resultType="int">
 	select count(bseq) from tb_board
 	</select>
+	
+	<insert id="addAttach">
+	insert into tb_file()
+	</insert>
 
 </mapper>

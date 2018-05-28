@@ -43,10 +43,16 @@
     </nav>
     
     <main role="main" class="container">
-    <h1>Welcom Member!!</h1>
-    <h3>${sessionScope.userInfo.nick}</h3>
-    <h3>${userInfo.email}</h3>
-    <h3>${userInfo.useq}</h3>
+    <div class="row">
+    	<div class="col-sm-12 text-center py-5">
+    	<h1 class="">Welcom Member!!</h1>
+    		<img class="rounded-circle" src="${pageContext.request.contextPath}/resources/img/sample.png" width="140" height="140">
+    		<h2>${sessionScope.userInfo.nick}</h2>
+    		<h3>${userInfo.email}</h3>
+    		<h3>${userInfo.useq}</h3>
+    		<button type="button" class="btn btn-danger" onclick="window.location='/';">Logout</button>
+    	</div>
+    </div>
     </main>
 
 

@@ -46,7 +46,7 @@
         <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
      
-     <form action="/boards" method="post">
+     <form id="registerForm" action="/boards" method="post">
        <div class="form-group row">
          <label for="staticNickname" class="col-sm-2 col-form-label">Nick Name</label>
          <div class="col-sm-10">
@@ -65,12 +65,38 @@
            <textarea style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="5" name="content"></textarea>
          </div>
        </div>
-       <!-- <div class="form-group row">
-         <label for="exampleFormControlFile1" class="col-sm-2 col-form-label">Example file input</label>
+       <div class="form-group row">
+         <label for="exampleFormControlFile1" class="col-sm-2 col-form-label">File</label>
          <div class="col-sm-10">
-           <input type="file" class="form-control-file" id="exampleFormControlFile1">
+           
+           <div class="fileDrop bg-light rounded p-4">
+             <label class="font-italic">File DROP Here</label>
+           </div>
+           <div class="box-footer">
+       	     <div>
+       		   <hr>
+          	 </div>
+          	 <div class="container">
+          	   <div class="row">
+          	     <div class="col-md-2" id="box-footer">
+          	       <div class="card mb-4 box-shadow">
+          	         <img class="card-img-top" style="width: 100%;" src="${pageContext.request.contextPath}/resources/img/sample.png"/>
+          	         <div class="card-body pb-0"><p class="card-text">text.jpg </p></div>
+          	         <div class="align-items-right"><button class="close text-danger"><span aria-hidden="true">&times;</span></button></div>
+          	       </div>
+          	     </div>
+          	   </div>
+          	 </div>
+          	 
+       	     <ul class="mailbox-attachments clearfix uploadedList">
+       	     
+       	     </ul>
+           </div>
+           
          </div>
-       </div> file upload form  -->
+       </div>
+       
+       
        
        <div class="form-group row justify-content-center">
          <button class="btn btn-lg btn-primary btn-block col-sm-5" type="submit">Submit</button>
@@ -87,6 +113,60 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
+    <script id="template" type="text/x-handlebars-templage">
+	  <li>
+	  <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+	  <div class="mailbox-attachment-info">
+	  <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
+	  <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delbtn"><i class="fa fa-fw fa-remove"></i></a>
+	  </div>
+	  </li>
+	</script>
+	<script>
+	//drag and drop
+	var template = Handlebars.compile($("#template").html());
+	$(".fileDrop").on("dragenter dragover", function(event){
+		event.preventDefault();
+	});
+	$(".fileDrop").on("drop", function(event){
+		event.preventDefault();
+		var files = event.originalEvent.dataTransfer.files;
+		var file = files[0];
+		var formData = new FormData();
+		formData.append("file", file);
+		//ajax
+		$.ajax({
+			url: '/uploadAjax',
+			data: formData,
+			dataType: 'text',
+			processData: false,
+			contentType: false,
+			type: 'POST',
+			success: function(data){
+				console.log(data);
+				var fileInfo = getFileInfo(data);
+				console.log(fileInfo);
+				var html = template(fileInfo);
+				$(".uploadedList").append(html);
+			}
+		});
+	});
+	
+	//form submit
+	$("#registerForm").submit(function(event){
+		event.preventDefault();
+		var that = $(this);
+		var str = "";
+		$(".uploadedList .delbtn").each(function(index){
+			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("href") + "'>";
+		});
+		that.append(str);
+		that.get(0).submit();
+	});
+	</script>
+    
     
   </body>
 </html>

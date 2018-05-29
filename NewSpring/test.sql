@@ -30,6 +30,14 @@ create table tb_file(
   bseq int
 )
 
+create table tb_attach(
+  fullName varchar(150) not null,
+  bseq int,
+  regdate DATETIME default CURRENT_TIMESTAMP,
+  primary key(fullName)
+)
+desc tb_attach;
+alter table tb_attach add constraint fk_attach_bseq foreign key(bseq) references tb_board(bseq);
 
 create table tb_reply(
   rseq int primary key AUTO_INCREMENT,

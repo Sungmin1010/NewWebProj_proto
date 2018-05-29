@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.example.Paging;
 import com.spring.example.controller.BoardController;
@@ -39,12 +40,18 @@ public class BoardBiz {
 		return dao.selectBoard(bseq);
 	}
 
-	public int insertBoard(HttpSession session, BoardVO vo) {
+	@Transactional
+	public void insertBoard(HttpSession session, BoardVO vo) {
 		// insert board
 		UserVO userVO = (UserVO) session.getAttribute("userInfo");
 		vo.setUseq(userVO.getUseq());
 		logger.info("insert board vo {}", vo);
+		dao.insertBoard(vo);
+		String[] files = vo.getFiles();
+		if(files == null) {return;}
+		for(String fileName:files) {
+			dao.addAttach(fileName);
+		}
 		
-		return dao.insertBoard(vo);
 	}
 }

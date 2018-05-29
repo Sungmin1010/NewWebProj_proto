@@ -1,6 +1,7 @@
 package com.spring.example.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class BoardVO {
 	
@@ -11,6 +12,15 @@ public class BoardVO {
 	private int bstatus;
 	private int hit;//
 	private int useq;//
+	
+	private String[] files;
+	
+	public String[] getFiles() {
+		return files;
+	}
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 	public BoardVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -70,8 +80,10 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bseq=" + bseq + ", title=" + title + ", content=" + content + ", datetime=" + datetime
-				+ ", bstatus=" + bstatus + ", hit=" + hit + ", useq=" + useq + "]";
+				+ ", bstatus=" + bstatus + ", hit=" + hit + ", useq=" + useq + ", files=" + Arrays.toString(files)
+				+ "]";
 	}
+	
 	
 	
 

@@ -31,6 +31,10 @@ public class BoardDao {
 		return res;
 	}
 	
+	public void addAttach(String fullName) {
+		sqlSession.insert("userMapper.addAttach", fullName);
+	}
+	
 	public List<BoardListVO> listPage(Paging paging){
 		return sqlSession.selectList("userMapper.selectPageList", paging);
 	}

@@ -48,7 +48,7 @@ public class BoardController {
 	public ModelAndView newBoard(BoardVO vo, ModelAndView mv, HttpSession session){
 		logger.info("user add new board {}", vo);
 		//insert board
-		int res = biz.insertBoard(session, vo);
+		biz.insertBoard(session, vo);
 		mv.setViewName("redirect:/boards");
 		
 		return mv;
@@ -70,5 +70,7 @@ public class BoardController {
 		logger.info("user get new board form");
 		return "postForm";
 	}
+	
+	
 
 }

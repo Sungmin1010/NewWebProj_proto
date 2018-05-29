@@ -118,6 +118,21 @@ public class HomeController {
 		
 		return "uploadResult";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/uploadAjax", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
+		logger.info("originalName: " + file.getOriginalFilename());
+		
+		return new ResponseEntity<String>(
+				UploadFileUtils.uploadFile(
+										uploadPath, 
+										file.getOriginalFilename(), 
+										file.getBytes())
+				, HttpStatus.CREATED);
+		
+	}
+	
 	private String uploadFile(String originalName, byte[] fileData) throws Exception {
 		UUID uid = UUID.randomUUID();
 		String savedName = uid.toString() + "_"+originalName;

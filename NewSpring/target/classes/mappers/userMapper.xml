@@ -35,7 +35,7 @@
 	</select>
 	
 	<insert id="addAttach">
-	insert into tb_file()
+	insert into tb_attach(fullname, bseq) values(#{fullName}, LAST_INSERT_ID())
 	</insert>
 
 </mapper>

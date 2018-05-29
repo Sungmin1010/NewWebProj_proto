@@ -16,6 +16,18 @@
 
     <!-- Custom styles for this template -->
     <%-- <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet"> --%>
+    <style>
+    iframe{
+    	width: 0px;
+    	height: 0px;
+    	border: 0px;
+    }
+    small{
+    	margin-left: 3px;
+    	font-weight: bold;
+    	color: gray;
+    }
+    </style>
   </head>
 <body>
 
@@ -43,10 +55,62 @@
     </nav>
     
     <main role="main" class="container">
-    	<form action="edit" method="post" enctype="multipart/form-data">
-    		<input type="file" name="file">
+    	<form id="form1" action="edit" method="post" enctype="multipart/form-data" target="zeroFrame">
+    		<input type="file" name="file" >
     		<input type="submit" value="upload">
     	</form>
+    	
+    	<iframe name="zeroFrame"></iframe>
+    	
+    	<div class="uploadedList">
+    	
+    	</div>
+    	
+    	
+    	<script>
+    		function addFilePath(msg){
+    			alert(msg);
+    			document.getElementById("form1").reset();
+    		}
+    		function checkImageType(fileName){
+    			var pattern = /jpg$|gif$|png$|jpeg$/i;
+    			return fileName.match(pattern);
+    		}
+    		function getOriginalName(fileName){
+    			if(checkImageType(fileName)){
+    				return;
+    			}
+    			var idx = fileName.indexOf("_") + 1;
+    			return fileName.substr(idx);
+    		}
+    		function getImageLink(fileName){
+    			if(!checkImageType(fileName)){
+    				return;
+    			}
+    			var front = fileName.substr(0,12);
+    			var end = fileName.substr(14);
+    			return front + end;
+    		}
+    		
+    		function upload(fileName){
+    			var str="";
+    			console.log("upload file");
+    			if(checkImageType(fileName)){
+    				str="<div>" 
+    						+ "<a href='displayFile?fileName=" + getImageLink(fileName)+"'>"
+    						+ "<img src='displayFile?fileName=" + fileName + "'/>"
+    						+ "</a><small data-src=" + fileName+">x</small></div>";
+    						//+ getImageLink(fileName) + "</a></div>";
+    			}else{
+    				str = "<div><a href='displayFile?fileName=" + fileName +"'>"
+    						+getOriginalName(fileName)+ "</a>"
+    						+"</a><small data-src=" + fileName+">x</small>";+"</div>";
+    			}
+    			
+    			$(".uploadedList").append(str);
+    		}
+    	</script>
+    	
    
     </main>
 
@@ -56,9 +120,30 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+	<script>
+    		$(".uploadedList").on("click", "small", function(event){
+    			console.log("click x!!");
+    			var that = $(this);
+    			
+    			$.ajax({
+    				url:"deleteFile",
+    				type:"post",
+    				data: {fileName:$(this).attr("data-src")},
+    				dataType:"text",
+    				success:function(result){
+    					if(result == 'deleted'){
+    						that.parent("div").remove();
+    						alert("deleted");
+    					}
+    				}
+    				
+    			});
+    		});
+    	</script>
 
 </body>
 </html>

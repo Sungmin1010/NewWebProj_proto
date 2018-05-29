@@ -77,20 +77,16 @@
        		   <hr>
           	 </div>
           	 <div class="container">
-          	   <div class="row">
-          	     <div class="col-md-2" id="box-footer">
+          	   <div class="row" id="uploadedList">
+          	     <%-- <div class="col-md-2">
           	       <div class="card mb-4 box-shadow">
           	         <img class="card-img-top" style="width: 100%;" src="${pageContext.request.contextPath}/resources/img/sample.png"/>
-          	         <div class="card-body pb-0"><p class="card-text">text.jpg </p></div>
-          	         <div class="align-items-right"><button class="close text-danger"><span aria-hidden="true">&times;</span></button></div>
+          	         <div class="card-body pb-0"><a href="#" class="card-link">text.jpg</a></div>
+          	         <div class="align-items-right"><a href="#" class="close text-danger"><span aria-hidden="true">&times;</span></a></div>
           	       </div>
-          	     </div>
+          	     </div> --%>
           	   </div>
           	 </div>
-          	 
-       	     <ul class="mailbox-attachments clearfix uploadedList">
-       	     
-       	     </ul>
            </div>
            
          </div>
@@ -116,13 +112,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
     <script id="template" type="text/x-handlebars-templage">
-	  <li>
-	  <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-	  <div class="mailbox-attachment-info">
-	  <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
-	  <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delbtn"><i class="fa fa-fw fa-remove"></i></a>
-	  </div>
-	  </li>
+<div class="col-md-2" id="box-footer">
+  <div class="card mb-4 box-shadow">
+    <img class="card-img-top" style="width: 100%;" src="{{imgsrc}}" alt="Attachment"/>
+    <div class="card-body pb-0"><a href="{{getLink}}" class="card-link">text.jpg</a></div>
+    <div class="align-items-right"><a href="{{fullName}}" class="close text-danger"><span aria-hidden="true">&times;</span></a></div>
+  </div>
+</div>
 	</script>
 	<script>
 	//drag and drop
@@ -149,7 +145,7 @@
 				var fileInfo = getFileInfo(data);
 				console.log(fileInfo);
 				var html = template(fileInfo);
-				$(".uploadedList").append(html);
+				$("#uploadedList").append(html);
 			}
 		});
 	});
@@ -159,7 +155,7 @@
 		event.preventDefault();
 		var that = $(this);
 		var str = "";
-		$(".uploadedList .delbtn").each(function(index){
+		$("#uploadedList .close").each(function(index){
 			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("href") + "'>";
 		});
 		that.append(str);

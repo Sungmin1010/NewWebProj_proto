@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.example.PageMaker;
 import com.spring.example.Paging;
@@ -46,12 +47,15 @@ public class BoardController {
 		
 	}
 	
+	
 	//new board
 	@RequestMapping(value="/boards", method=RequestMethod.POST)
-	public ModelAndView newBoard(BoardVO vo, ModelAndView mv, HttpSession session){
+	public ModelAndView newBoard(BoardVO vo, ModelAndView mv, HttpSession session, RedirectAttributes rttr){
 		logger.info("user add new board {}", vo);
 		//insert board
 		biz.insertBoard(session, vo);
+		
+		rttr.addFlashAttribute("msg", "success");
 		mv.setViewName("redirect:/boards");
 		
 		return mv;

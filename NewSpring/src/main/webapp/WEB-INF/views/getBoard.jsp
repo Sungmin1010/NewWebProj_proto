@@ -95,13 +95,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="row justify-content-center mb-3">
+		<c:if test="${sessionScope.userInfo.nick eq vo.nick}">
+		<button class="btn btn-lg btn-primary btn-block col-sm-4" onclick="window.location='/boards/modify?bseq=${vo.bseq};">modify</button>
+		</c:if>
+		</div>
 		
 		
 		
 </main>
 
     <!-- Bootstrap core JavaScript
-    ================================================== -->
+    ================================================== style="width: 100%;" -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -109,12 +114,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
     <script id="templateAttach" type=text/x-handlebars-template>
-    	<div class="col-xm-3">
-          <div class="card mb-4 box-shadow">
-            <img class="card-img-top" style="width: 100%;" src="{{imgsrc}}"/>
+    	
+          <div class="col-sm-2 card mb-3 box-shadow">
+            <img class="card-img-top" style="display:block;" src="{{imgsrc}}"/>
             <div class="card-body"><a id="file" href="{{getLink}}" class="card-link">{{fileName}}</a></div>
           </div>
-        </div>
+        
     </script>
     <script>
     	var bseq=${vo.bseq};

@@ -16,7 +16,7 @@ function getFileInfo(fullName){
 		
 		getLink = "/user/displayFile?fileName=" + front + end;
 	}else{
-		imgsrc = "/resources/img/file.png";
+		imgsrc = "/resources/img/blank-file.png";
 		fileLink = fullName.substr(12);
 		getLink = "/user/displayFile?fileName=" + fullName;
 	}

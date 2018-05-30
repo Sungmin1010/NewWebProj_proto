@@ -61,6 +61,7 @@ show tables
 =====================================================
 
 insert into tb_user(nick, email, pwd) values('testNick', 'test@mail.com', '0000');
+insert into tb_user(nick, email, pwd) values('test1', 'test1@mail.com', '1111');
 select nick, email, pwd from tb_user where nick='testNick';
 insert into tb_board(title, content, hit, useq) values('test post title', 'This is my first board', 0, 1 );
 select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq;

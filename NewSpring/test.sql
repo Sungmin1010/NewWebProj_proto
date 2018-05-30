@@ -2,7 +2,7 @@ drop table tb_user;
 drop table tb_board;
 drop table tb_file;
 drop table tb_reply;
-
+drop table tb_attach;
 create table tb_user(
   useq int primary key AUTO_INCREMENT,
   nick varchar(30) not null,
@@ -38,6 +38,8 @@ create table tb_attach(
 )
 desc tb_attach;
 alter table tb_attach add constraint fk_attach_bseq foreign key(bseq) references tb_board(bseq);
+select * from tb_attach;
+select fullname from tb_attach where bseq=27 order by regdate;
 
 create table tb_reply(
   rseq int primary key AUTO_INCREMENT,
@@ -82,8 +84,8 @@ insert into tb_board(title, content, hit, useq) values('test10', 'This is my fir
 insert into tb_board(title, content, hit, useq) values('test11', 'This is my first board', 0, 1 );
 insert into tb_board(title, content, hit, useq) values('test12', 'This is my first board', 0, 1 );
 insert into tb_board(title, content, hit, useq) values('test13', 'This is my first board', 0, 1 );
-
+SELECT LAST_INSERT_ID();
 select * from tb_board order by bseq desc limit 0, 10;
-
+SELECT LAST_INSERT_ID();
 
 

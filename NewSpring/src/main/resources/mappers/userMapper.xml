@@ -19,7 +19,7 @@
     </select>
     
     <select id="selectBoard" parameterType="int" resultType="BoardListVO">
-    select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=#{bseq}
+    select u.nick, b.bseq, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=#{bseq}
     </select>
 
 	<insert id="insertBoard" parameterType="BoardVO">
@@ -34,8 +34,12 @@
 	select count(bseq) from tb_board
 	</select>
 	
-	<insert id="addAttach">
+	<insert id="addAttach" parameterType="String">
 	insert into tb_attach(fullname, bseq) values(#{fullName}, LAST_INSERT_ID())
 	</insert>
+	
+	<select id="getAttach" parameterType="int" resultType="string">
+	select fullname from tb_attach where bseq=#{bseq} order by regdate
+	</select>
 
 </mapper>

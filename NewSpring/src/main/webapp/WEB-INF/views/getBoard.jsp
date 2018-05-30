@@ -13,9 +13,33 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
+	
     <!-- Custom styles for this template -->
-    <%-- <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet"> --%>
+    <style type="text/css">
+    	.popup {
+    		position: absolute;
+    	}
+    	.back {
+    		background-color: gray;
+    		opacity:0.5;
+    		width:100%;
+    		height: 300%;
+    		overflow: hidden;
+    		z-index:1101;
+    	}
+    	.front {
+    		z-index:1110;
+    		opacity:1;
+    		boarder:1px;
+    		margin: auto;
+    	}
+    	.show {
+    		position: relative;
+    		max-width: 1200px;
+    		max-height: 800px;
+    		overflow: auto;
+    	}
+    </style>
   </head>
 
   <body>
@@ -39,16 +63,26 @@
         </form>
       </div>
     </nav>
+    
+    <div class="popup back" style="display:none;"></div>
+		  <div id="popup_front" class="popup front" style="display:none;">
+		    <img id="popup_img">
+		  </div>
 
      <main role="main" class="container">
-		<div class="card-deck mb-3 py-3">
+		<div class="card-deck mb-3 py-5">
 			<div class="card mb-4 box-shadow">
 				<div class="card-body">
-				<h3 class="card-title">${vo.title}</h5>
-				<p class="card-title">${vo.nick}</p>
-				<p class="card-text text-right"><small class="text-muted">${vo.datetime }</small></p>
-				<p class="card-text">${vo.content }</p>
+				  <h3 class="card-title mb-0 text-dark">${vo.title}</h3><small class="text-muted text-right">${vo.datetime }</small>
+				  <p class="card-title">${vo.nick}</p>
+				  <p class="card-text">${vo.content }</p>
 				</div>
+				<hr>
+				<div class="container">
+          	      <div class="row" id="uploadedList">
+          	        
+          	      </div>
+          	    </div>
 			</div>
 		</div>
 		
@@ -61,11 +95,10 @@
 				</div>
 			</div>
 		</div>
-
-
-
-    </main> <!-- //container -->
-
+		
+		
+		
+</main>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -73,6 +106,50 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
+    <script id="templateAttach" type=text/x-handlebars-template>
+    	<div class="col-xm-3">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top" style="width: 100%;" src="{{imgsrc}}"/>
+            <div class="card-body"><a id="file" href="{{getLink}}" class="card-link">{{fileName}}</a></div>
+          </div>
+        </div>
+    </script>
+    <script>
+    	var bseq=${vo.bseq};
+    	
+    	var template = Handlebars.compile($("#templateAttach").html());
+    	
+    	$.getJSON("/boards/getAttach/" +bseq, function(list){
+    		console.log(list);
+    		$(list).each(function(){
+    			var fileInfo = getFileInfo(this);
+    			var html = template(fileInfo);
+    			$("#uploadedList").append(html);
+    		});
+    	});
+    
+    </script>
+    <script>
+    	$("#uploadedList").on("click", "#file", function(event){
+    		
+    		var fileLink = $(this).attr("href");
+    		if(checkImageType(fileLink)){
+    			event.preventDefault();
+    			var imgTag = $("#popup_img");
+    			imgTag.attr("src", fileLink);
+    			
+    			console.log(imgTag.attr("src"));
+    			
+    			$(".popup").show('slow');
+    			imgTag.addClass("show");
+    		}
+    	});
+    	$("#popup_img").on("click", function(){
+    		$(".popup").hide('slow');
+    	});
+    </script>
     
   </body>
 </html>

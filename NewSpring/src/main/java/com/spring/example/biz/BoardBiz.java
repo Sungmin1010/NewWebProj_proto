@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.example.Paging;
@@ -40,7 +41,7 @@ public class BoardBiz {
 		return dao.selectBoard(bseq);
 	}
 
-	@Transactional
+	@Transactional()
 	public void insertBoard(HttpSession session, BoardVO vo) {
 		// insert board
 		UserVO userVO = (UserVO) session.getAttribute("userInfo");
@@ -52,6 +53,13 @@ public class BoardBiz {
 		for(String fileName:files) {
 			dao.addAttach(fileName);
 		}
-		
+	}
+	
+	//get File fullName with bseq(ajax)
+	public List<String> getAttach(int bseq){
+		List<String> list = dao.getAttach(bseq);
+		logger.info("get list");
+		System.out.println("가져온 데이터 크기" +list.size());
+		return list;
 	}
 }

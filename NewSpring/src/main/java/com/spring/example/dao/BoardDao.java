@@ -41,5 +41,10 @@ public class BoardDao {
 	public int countPaging(Paging paging) {
 		return sqlSession.selectOne("userMapper.countPaging", paging);
 	}
+	
+	//get attach with bseq(ajax)
+	public List<String> getAttach(int bseq){
+		return sqlSession.selectList("userMapper.getAttach", bseq);
+	}
 
 }

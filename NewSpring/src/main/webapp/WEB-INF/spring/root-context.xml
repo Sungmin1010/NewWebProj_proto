@@ -30,8 +30,14 @@
 
 <!-- mybatis SqlSessionTemplate -->
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" index="0"></constructor-arg>
 </bean>
+
+<!-- transaction -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+
 
 <!-- bean -->
 <context:component-scan base-package="com.spring.example.dao"/>

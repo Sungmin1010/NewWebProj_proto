@@ -1,5 +1,7 @@
 package com.spring.example.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -44,6 +46,7 @@ public class BoardController {
 		
 	}
 	
+	//new board
 	@RequestMapping(value="/boards", method=RequestMethod.POST)
 	public ModelAndView newBoard(BoardVO vo, ModelAndView mv, HttpSession session){
 		logger.info("user add new board {}", vo);
@@ -69,6 +72,18 @@ public class BoardController {
 	public String newBoard() {
 		logger.info("user get new board form");
 		return "postForm";
+	}
+	
+	//get File fullName with bseq
+	
+	@RequestMapping(value="/boards/getAttach/{bseq}")
+	@ResponseBody
+	public List<String> getAttach(@PathVariable("bseq")int bseq){
+		List<String> files = biz.getAttach(bseq);
+		for(String a:files) {
+			System.out.println(a);
+		}
+		return files;
 	}
 	
 	

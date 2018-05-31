@@ -62,4 +62,21 @@ public class BoardBiz {
 		System.out.println("가져온 데이터 크기" +list.size());
 		return list;
 	}
+	
+	//modify board content + delete files from tb_attach + insert files from tb_attach
+	@Transactional
+	public void modify(BoardVO vo) {
+		dao.updateBoard(vo);
+		
+		int bseq = vo.getBseq();
+		dao.deleteAttach(bseq);
+		
+		String[] files = vo.getFiles();
+		if(files==null) {
+			return ;
+		}
+		for(String fileName: files) {
+			dao.replaceAttach(fileName, bseq);
+		}
+	}
 }

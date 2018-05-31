@@ -116,7 +116,7 @@
   <div class="card mb-4 box-shadow">
     <img class="card-img-top" style="width: 100%;" src="{{imgsrc}}" alt="Attachment"/>
     <div class="card-body pb-0"><a href="{{getLink}}" class="card-link">text.jpg</a></div>
-    <div class="align-items-right"><a href="{{fullName}}" class="close text-danger"><span aria-hidden="true">&times;</span></a></div>
+    <div class="align-items-right" id="removeBtn"><span class="close text-danger" aria-hidden="true" data-src="{{fullName}}">&times;</span></div>
   </div>
 </div>
 	</script>
@@ -150,13 +150,32 @@
 		});
 	});
 	
+	
+	$("#uploadedList").on("click", "#removeBtn", function(event){
+		//console.log("click x!!");
+		var that = $(this);
+		//console.log($("#removeBtn span").attr("data-src"));
+		 $.ajax({
+			url:"/deleteFile",
+			type:"post",
+			data: {fileName:$("#removeBtn span").attr("data-src")},
+			dataType:"text",
+			success:function(result){
+				if(result == 'deleted'){
+					that.parents("div #box-footer").remove();
+					alert("deleted");
+				}
+			}
+		});
+	});
+	
 	//form submit
 	$("#registerForm").submit(function(event){
 		event.preventDefault();
 		var that = $(this);
 		var str = "";
 		$("#uploadedList .close").each(function(index){
-			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("href") + "'>";
+			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("data-src") + "'>";
 		});
 		that.append(str);
 		that.get(0).submit();

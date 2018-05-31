@@ -90,6 +90,30 @@ public class BoardController {
 		return files;
 	}
 	
+	@RequestMapping(value="/boards/revision/{bseq}", method=RequestMethod.GET)
+	public String modifyBoard(@PathVariable("bseq")int bseq, Model model) {
+		logger.info("modify board", bseq);
+		model.addAttribute("board", biz.selectBoard(bseq));
+		return "modifyForm";
+		
+	}
+	
+	@RequestMapping(value="/boards/{bseq}", method=RequestMethod.PUT)
+	public ModelAndView modifyBoardPOST(BoardVO vo, ModelAndView mv, RedirectAttributes rttr) {
+		logger.info("put board");
+		biz.modify(vo);
+		rttr.addAttribute("msg", "success");
+		mv.setViewName("redirect:/boards");
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="/boards/{bseq}", method=RequestMethod.DELETE)
+	public ModelAndView boardDELETE(BoardVO vo, ModelAndView mv, RedirectAttributes rttr) {
+		logger.info("delete all files : ");
+		return null;
+		
+	}
 	
 
 }

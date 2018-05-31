@@ -95,9 +95,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="row justify-content-center mb-3">
+		<div class="justify-content-center mb-3">
 		<c:if test="${sessionScope.userInfo.nick eq vo.nick}">
-		<button class="btn btn-lg btn-primary btn-block col-sm-4" onclick="window.location='/boards/modify?bseq=${vo.bseq};">modify</button>
+		<form class="form-inline" id="deleteForm" action="/boards/${vo.bseq}" method="post">
+			<input type="hidden" name="_method" value="delete"/>
+			<input type="hidden" name="bseq" value="${vo.bseq}"/>
+		
+		<button type="button" class="btn btn-primary mr-3 col-sm-3" onclick="window.location='/boards/revision/${vo.bseq}'">modify</button>
+		<button type="submit" class="btn btn-danger col-sm-3" onclick="window.location='/boards/${vo.bseq}'">delete</button>
+		
+		</form>
 		</c:if>
 		</div>
 		
@@ -154,6 +161,11 @@
     	$("#popup_img").on("click", function(){
     		$(".popup").hide('slow');
     	});
+    	
+    	//delete board
+    	$("#removeBtn").on("click", function(){});
+    	
+    	
     </script>
     
   </body>

@@ -26,6 +26,10 @@
 	insert into tb_board(title, content, hit, useq) values(#{title}, #{content}, 0, #{useq})
 	</insert>
 	
+	<update id="updateBoard" parameterType="BoardVO">
+	update tb_board set title=#{title}, content=#{content} where bseq=#{bseq}
+	</update>
+	
 	<select id="selectPageList" parameterType="Paging" resultType="BoardListVO">
 	select * from tb_board order by bseq desc limit #{pageStart}, #{perPageNum}
 	</select>
@@ -36,6 +40,14 @@
 	
 	<insert id="addAttach" parameterType="String">
 	insert into tb_attach(fullname, bseq) values(#{fullName}, LAST_INSERT_ID())
+	</insert>
+	
+	<delete id="deleteAttach">
+	delete from tb_attach where bseq=#{bseq}
+	</delete>
+	
+	<insert id="replaceAttach">
+	insert into tb_attach(fullname, bseq) values(#{fullName}, #{bseq})
 	</insert>
 	
 	<select id="getAttach" parameterType="int" resultType="string">

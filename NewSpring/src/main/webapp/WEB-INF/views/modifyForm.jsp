@@ -46,23 +46,24 @@
         <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
      
-     <form id="Modify Form" action="/boards" method="post">
+     <form id="ModifyForm" action="/boards/${board.bseq}" method="post">
+       <input type="hidden" name="_method" value="put"/>
        <div class="form-group row">
          <label for="staticNickname" class="col-sm-2 col-form-label">Nick Name</label>
          <div class="col-sm-10">
-           <input type="text" readonly class="form-control-plaintext" id="staticNickname" value="${userInfo.nick}"/>
+           <input type="text" readonly class="form-control-plaintext" id="staticNickname" value="${board.nick}"/>
          </div>
        </div>
        <div class="form-group row">
          <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
          <div class="col-sm-10">
-           <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title">
+           <input type="text" class="form-control" id="inputTitle" value="${board.title}" name="title">
          </div>
        </div>
        <div class="form-group row">
          <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label">Content</label>
          <div class="col-sm-10">
-           <textarea style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="5" name="content"></textarea>
+           <textarea style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="5" name="content">${board.content}</textarea>
          </div>
        </div>
        <div class="form-group row">
@@ -116,11 +117,25 @@
   <div class="card mb-4 box-shadow">
     <img class="card-img-top" style="width: 100%;" src="{{imgsrc}}" alt="Attachment"/>
     <div class="card-body pb-0"><a href="{{getLink}}" class="card-link">text.jpg</a></div>
-    <div class="align-items-right"><a href="{{fullName}}" class="close text-danger"><span aria-hidden="true">&times;</span></a></div>
+    <div class="align-items-right" id="removeBtn"><span class="close text-danger" aria-hidden="true" data-src="{{fullName}}">&times;</span></div>
   </div>
 </div>
 	</script>
+	
 	<script>
+	//load file
+	var bseq=${board.bseq};
+	var template = Handlebars.compile($("#template").html());
+	$.getJSON("/boards/getAttach/" + bseq, function(list){
+		console.log(list);
+		$(list).each(function(){
+			var fileInfo = getFileInfo(this);
+			var html = template(fileInfo);
+			$("#uploadedList").append(html);
+			
+		});
+	});
+	
 	//drag and drop
 	var template = Handlebars.compile($("#template").html());
 	$(".fileDrop").on("dragenter dragover", function(event){
@@ -150,13 +165,32 @@
 		});
 	});
 	
+	//delete file from server
+	$("#uploadedList").on("click", "#removeBtn", function(event){
+		//console.log("click x!!");
+		var that = $(this);
+		//console.log($("#removeBtn span").attr("data-src"));
+		 $.ajax({
+			url:"/deleteFile",
+			type:"post",
+			data: {fileName:$("#removeBtn span").attr("data-src")},
+			dataType:"text",
+			success:function(result){
+				if(result == 'deleted'){
+					that.parents("div #box-footer").remove();
+					alert("deleted");
+				}
+			}
+		});
+	});
+	
 	//form submit
-	$("#registerForm").submit(function(event){
+	$("#ModifyForm").submit(function(event){
 		event.preventDefault();
 		var that = $(this);
 		var str = "";
 		$("#uploadedList .close").each(function(index){
-			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("href") + "'>";
+			str += "<input type='hidden' name='files[" + index + "]' value='" + $(this).attr("data-src") + "'>";
 		});
 		that.append(str);
 		that.get(0).submit();

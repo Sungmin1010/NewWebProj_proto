@@ -182,7 +182,7 @@ public class HomeController {
 	
 		//delete File
 	@ResponseBody
-	@RequestMapping(value="/user/deleteFile", method=RequestMethod.POST)
+	@RequestMapping(value="/deleteFile", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String fileName){
 		logger.info("delete file: " + fileName);
 		String formatName = fileName.substring(fileName.lastIndexOf(".")+1);

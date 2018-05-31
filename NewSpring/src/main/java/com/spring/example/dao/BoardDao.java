@@ -1,6 +1,8 @@
 package com.spring.example.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,22 @@ public class BoardDao {
 		int res = sqlSession.insert("userMapper.insertBoard", vo);
 		return res;
 	}
+	public void updateBoard(BoardVO vo) {
+		sqlSession.update("userMapper.updateBoard", vo);
+	}
 	
 	public void addAttach(String fullName) {
 		sqlSession.insert("userMapper.addAttach", fullName);
+	}
+	public void deleteAttach(int bseq) {
+		sqlSession.delete("userMapper.deleteAttach", bseq);
+	}
+	public void replaceAttach(String fullName, int bseq) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("bseq", bseq);
+		paramMap.put("fullName", fullName);
+		
+		sqlSession.insert("userMapper.replaceAttach", paramMap);
 	}
 	
 	public List<BoardListVO> listPage(Paging paging){
@@ -46,5 +61,6 @@ public class BoardDao {
 	public List<String> getAttach(int bseq){
 		return sqlSession.selectList("userMapper.getAttach", bseq);
 	}
+	
 
 }

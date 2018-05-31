@@ -180,7 +180,7 @@ public class HomeController {
 		
 	}
 	
-		//delete File
+		//delete File(one)
 	@ResponseBody
 	@RequestMapping(value="/deleteFile", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteFile(String fileName){
@@ -198,10 +198,15 @@ public class HomeController {
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
 	
+		//delete Files (array)
+	
+	
+	
 	@RequestMapping(value="/user/edit", method=RequestMethod.GET)
 	public String uploadForm() {
 		return "editProfileImg";
 	}
+	
 	
 	
 }

@@ -102,7 +102,7 @@
 			<input type="hidden" name="bseq" value="${vo.bseq}"/>
 		
 		<button type="button" class="btn btn-primary mr-3 col-sm-3" onclick="window.location='/boards/revision/${vo.bseq}'">modify</button>
-		<button type="submit" class="btn btn-danger col-sm-3" onclick="window.location='/boards/${vo.bseq}'">delete</button>
+		<button type="button" id="removeBtn" class="btn btn-danger col-sm-3" >delete</button>
 		
 		</form>
 		</c:if>
@@ -122,7 +122,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
     <script id="templateAttach" type=text/x-handlebars-template>
     	
-          <div class="col-sm-2 card mb-3 box-shadow">
+          <div class="col-sm-2 card mb-3 box-shadow" data-src='{{fullName}}'>
             <img class="card-img-top" style="display:block;" src="{{imgsrc}}"/>
             <div class="card-body"><a id="file" href="{{getLink}}" class="card-link">{{fileName}}</a></div>
           </div>
@@ -163,7 +163,24 @@
     	});
     	
     	//delete board
-    	$("#removeBtn").on("click", function(){});
+    	$("#removeBtn").on("click", function(){
+    		var delAlert = confirm("해당 글을 삭제 하시겠습니까?")
+    		if(delAlert==true){
+    			var arr = [];
+    			$("#uploadedList .box-shadow").each(function(index){
+    				arr.push($(this).attr("data-src"));
+    			});
+    			
+    			if(arr.length > 0){
+    				$.post("/deleteAllFiles", {files:arr}, function(){
+    					
+    				});
+    			}
+    			 
+    		}else{
+    			
+    		}
+    	});
     	
     	
     </script>

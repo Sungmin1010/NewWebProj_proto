@@ -92,26 +92,20 @@
 				
 				<div class="card-body row">
 				
-				  <textarea class="col-sm-9" rows="3" style="resize: none;"></textarea>
-				  <button class="btn btn-outline-primary col-sm-2">ADD</button>
+				  <textarea id="replyComment" class="col-sm-9" rows="3" style="resize: none;"></textarea>
+				  <button id="replyAddBtn" class="btn btn-outline-primary col-sm-2">ADD</button>
 				
 				</div>
 			</div>
 		</div>
 		
-		<div class="card-deck mb-3">
-			<div class="card mb-4 box-shadow">
-				<div class="card-header">COMMENT</div>
-				<div class="card-body">
-				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
-				<p class="card-text">${vo.content }</p>
-				</div>
-				<hr>
-				<div class="card-body">
-				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
-				<p class="card-text">${vo.content }</p>
-				</div>
-			</div>
+		<div class="card mb-3">
+			<div class="card-header">COMMENT</div>
+			<ul class="list-group list-group-flush" id="commentList">
+				
+				
+
+			</ul>
 		</div>
 		
 		<div class="justify-content-center mb-3">
@@ -147,7 +141,35 @@
           </div>
         
     </script>
+    <script id="replyTemplate" type=text/x-handlebars-template>
+    	<li class="list-group-item">{{useq}} <small class="text-muted">{{}}</small></p>
+		  <p class="card-text">${vo.content }</p>
+		</li>
+    </script>
     <script>
+    //reply function
+    function loadReplyList(bseq){
+    	$.getJSON("/replies/all/"+bseq, function(data){
+        	var str = "";
+        	$(data).each(function(){
+        		str += "<li class='list-group-item'>"+this.nick+" <small class='text-muted'> "+preDate(this.datetime)+"</small></p>"
+      		  		+  "<p class='card-text'>"+this.comment+"</p></li>";
+        	});
+        	$("#commentList").html(str);
+        });
+    }
+    
+    function preDate(timeValue){
+    	var dateObj = new Date(timeValue);
+    	var year = dateObj.getFullYear();
+    	var month = dateObj.getMonth() +1;
+    	var date = dateObj.getDate();
+    	return year+"/"+month+"/"+date;
+    }
+    
+    </script>
+    <script>
+    
     	var bseq=${vo.bseq};
     	
     	var template = Handlebars.compile($("#templateAttach").html());
@@ -161,7 +183,40 @@
     		});
     	});
     
+    	//reply
+    	loadReplyList(bseq);
+    	
     </script>
+    <script>
+    	$("#replyAddBtn").on("click", function(event){
+    		var comment = $("#replyComment").val();
+    		var useq = ${sessionScope.userInfo.useq};
+    		$("#replyComment").val("");
+    		$.ajax({
+    			type: 'post',
+    			url:'/replies',
+    			headers : {
+    				"Content-Type" : "application/json",
+    				"X-HTTP-Method-Override" : "POST"
+    			},
+    			dataType: 'text',
+    			data : JSON.stringify({
+    				bseq:bseq,
+    				useq:useq,
+    				comment:comment
+    			}),
+    			success:function(result){
+    				if(result == 'SUCCESS'){
+    					alert("등록 되었습니다.");
+    					loadReplyList(bseq);
+    				}
+    			}
+    		});
+    		
+    		
+    	});
+    </script>
+    
     <script>
     	$("#uploadedList").on("click", "#file", function(event){
     		

@@ -43,7 +43,7 @@
      <main role="main" class="container">
      <div class="my-3">
      	<div class="h1">
-     	BOARD <button type="button" class="btn btn-primary" onclick="window.location='/boards/new';"> + NEW </button><h3>${sessionScope.userInfo.nick}</h3>
+     	BOARD <button type="button" class="btn btn-primary" onclick="window.location='/boards/new';"> + NEW </button>
      	</div>
      	
      </div>

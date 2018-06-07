@@ -61,6 +61,11 @@ public class BoardDao {
 	public List<String> getAttach(int bseq){
 		return sqlSession.selectList("userMapper.getAttach", bseq);
 	}
+
+	public void updateHit(int bseq) {
+		sqlSession.update("userMapper.increseHit", bseq);
+		
+	}
 	
 
 }

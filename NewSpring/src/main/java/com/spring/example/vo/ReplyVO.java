@@ -10,7 +10,14 @@ public class ReplyVO {
 	private String comment;
 	private int rstatus;
 	private Date datetime;
-	public ReplyVO(int rseq, int bseq, int useq, String comment, int rstatus, Date datetime) {
+	private String nick;
+	
+	
+	public ReplyVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public ReplyVO(int rseq, int bseq, int useq, String comment, int rstatus, Date datetime, String nick) {
 		super();
 		this.rseq = rseq;
 		this.bseq = bseq;
@@ -18,6 +25,7 @@ public class ReplyVO {
 		this.comment = comment;
 		this.rstatus = rstatus;
 		this.datetime = datetime;
+		this.nick = nick;
 	}
 	public int getRseq() {
 		return rseq;
@@ -55,10 +63,18 @@ public class ReplyVO {
 	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
 	}
+	
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [rseq=" + rseq + ", bseq=" + bseq + ", useq=" + useq + ", comment=" + comment + ", rstatus="
-				+ rstatus + ", datetime=" + datetime + "]";
+				+ rstatus + ", datetime=" + datetime + ", nick="+nick+"]";
 	}
 	
 	

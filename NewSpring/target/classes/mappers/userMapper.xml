@@ -21,6 +21,10 @@
     <select id="selectBoard" parameterType="int" resultType="BoardListVO">
     select u.nick, b.bseq, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=#{bseq}
     </select>
+    
+    <update id="increseHit">
+    update tb_board set hit=hit+1 where bseq=#{bseq}
+    </update>
 
 	<insert id="insertBoard" parameterType="BoardVO">
 	insert into tb_board(title, content, hit, useq) values(#{title}, #{content}, 0, #{useq})
@@ -31,7 +35,10 @@
 	</update>
 	
 	<select id="selectPageList" parameterType="Paging" resultType="BoardListVO">
-	select * from tb_board order by bseq desc limit #{pageStart}, #{perPageNum}
+	select u.nick, b.bseq, b.title, b.datetime, b.hit
+	from tb_board b, tb_user u
+	where u.useq=b.useq
+	order by bseq desc limit #{pageStart}, #{perPageNum}
 	</select>
 	
 	<select id="countPaging" resultType="int">
@@ -54,8 +61,22 @@
 	select fullname from tb_attach where bseq=#{bseq} order by regdate
 	</select>
 	
-	<insert id="insertReply" >
-	
+	<insert id="insertReply" parameterType="ReplyVO">
+	insert into tb_reply(bseq, useq, comment) values(#{bseq}, #{useq}, #{comment})
 	</insert>
+	
+	<select id="list" resultType="ReplyVO">
+	select r.rseq, r.bseq, u.nick, r.comment, r.datetime 
+	from tb_reply r, tb_user u 
+	where r.useq=u.useq and bseq=#{bseq} and rstatus=0 order by rseq desc
+	</select>
+	
+	<update id="update" parameterType="ReplyVO">
+	update tb_reply set comment = #{comment}, datetime = now() where rseq=#{rseq}
+	</update>
+	
+	<update id="delete">
+	update tb_reply set rstatus = 1 where rseq=#{rseq}
+	</update>
 
 </mapper>

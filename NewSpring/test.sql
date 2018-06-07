@@ -50,6 +50,8 @@ create table tb_reply(
   datetime DATETIME default CURRENT_TIMESTAMP
 )
 desc tb_reply;
+select * from tb_reply;
+
 
 alter table tb_board add constraint fk_board_useq foreign key(useq) references tb_user(useq);
 alter table tb_file add constraint fk_file_bseq foreign key(bseq) references tb_board(bseq);
@@ -63,6 +65,8 @@ show tables
 
 insert into tb_user(nick, email, pwd) values('testNick', 'test@mail.com', '0000');
 insert into tb_user(nick, email, pwd) values('test1', 'test1@mail.com', '1111');
+insert into tb_user(nick, email, pwd) values('롱롱', 'test10@mail.com', '0000');
+
 insert into tb_board(title, content, hit, useq) values('test post title', 'This is my first board', 0, 1 );
 select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq;
 select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=1;
@@ -74,19 +78,20 @@ select * from tb_file;
 select * from tb_board order by bseq desc;
 
 
-insert into tb_board(title, content, hit, useq) values('test3', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test4', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test5', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test6', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test7', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test8', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test9', 'This is my first board', 0, 1 );
-insert into tb_board(title, content, hit, useq) values('test10', 'This is my first board', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('미드 추천 받아용', '요즘 ', 0, 1 );
+insert into tb_board(title, content, hit, useq) values('다들 여가시간에 머하시나요', 'This is my first board', 0, 6);
+insert into tb_board(title, content, hit, useq) values('댄스동호회 모집합니당~~', 'This is my first board', 0, 7);
+insert into tb_board(title, content, hit, useq) values('인원 충원합니다.(꼭 하실분만!)', 'This is my first board', 0, 8);
+insert into tb_board(title, content, hit, useq) values('강남에 영화 카페 있을까요?', 'This is my first board', 0, 9);
+insert into tb_board(title, content, hit, useq) values('클래식 음악 추천 리스트', 'This is my first board', 0, 10);
+insert into tb_board(title, content, hit, useq) values('월디페 가보신분??', 'This is my first board', 0, 11);
+insert into tb_board(title, content, hit, useq) values('신촌에 만화카페 추천 받아욧!!', 'This is my first board', 0, 12);
 insert into tb_board(title, content, hit, useq) values('test11', 'This is my first board', 0, 1 );
 insert into tb_board(title, content, hit, useq) values('test12', 'This is my first board', 0, 1 );
 insert into tb_board(title, content, hit, useq) values('test13', 'This is my first board', 0, 1 );
 SELECT LAST_INSERT_ID();
 select * from tb_board order by bseq desc limit 0, 10;
 SELECT LAST_INSERT_ID();
-
-
+update tb_board set hit=hit+1 where bseq=1;
+select * from tb_board
+update tb_board set content="날씨도 덥고 에어컨 빵빵한데서 만화책 보고 싶은데 신촌에 괜찮을 곳 있을까요?? " where bseq=20;

@@ -8,6 +8,7 @@
             <typeAlias type="com.spring.example.vo.BoardListVO" alias="BoardListVO"/>
             <typeAlias type="com.spring.example.vo.BoardVO" alias="BoardVO"/>
             <typeAlias type="com.spring.example.Paging" alias="Paging"/>
+            <typeAlias type="com.spring.example.vo.ReplyVO" alias="ReplyVO"/>
         </typeAliases>
 
  

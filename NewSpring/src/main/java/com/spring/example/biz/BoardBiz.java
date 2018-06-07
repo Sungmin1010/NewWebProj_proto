@@ -35,9 +35,10 @@ public class BoardBiz {
 		return dao.countPaging(paging);
 	}
 	
+	@Transactional()
 	public BoardListVO selectBoard(int bseq) {
 		//increase hit 
-		
+		dao.updateHit(bseq);
 		return dao.selectBoard(bseq);
 	}
 

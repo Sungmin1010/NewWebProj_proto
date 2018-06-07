@@ -70,7 +70,7 @@
 		  </div>
 
      <main role="main" class="container">
-		<div class="card-deck mb-3 py-5">
+		<div class="card-deck py-5">
 			<div class="card mb-4 box-shadow">
 				<div class="card-body">
 				  <h3 class="card-title mb-0 text-dark">${vo.title}</h3><small class="text-muted text-right">${vo.datetime }</small>
@@ -88,13 +88,32 @@
 		
 		<div class="card-deck mb-3">
 			<div class="card mb-4 box-shadow">
+				<div class="card-header">ADD NEW REPLY</div>
+				
+				<div class="card-body row">
+				
+				  <textarea class="col-sm-9" rows="3" style="resize: none;"></textarea>
+				  <button class="btn btn-outline-primary col-sm-2">ADD</button>
+				
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-deck mb-3">
+			<div class="card mb-4 box-shadow">
 				<div class="card-header">COMMENT</div>
+				<div class="card-body">
+				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
+				<p class="card-text">${vo.content }</p>
+				</div>
+				<hr>
 				<div class="card-body">
 				<p class="card-title">${vo.nick} <small class="text-muted">${vo.datetime }</small></p>
 				<p class="card-text">${vo.content }</p>
 				</div>
 			</div>
 		</div>
+		
 		<div class="justify-content-center mb-3">
 		<c:if test="${sessionScope.userInfo.nick eq vo.nick}">
 		<form class="form-inline" id="deleteForm" action="/boards/${vo.bseq}" method="post">

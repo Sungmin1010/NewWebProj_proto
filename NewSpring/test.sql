@@ -39,7 +39,7 @@ create table tb_attach(
 desc tb_attach;
 alter table tb_attach add constraint fk_attach_bseq foreign key(bseq) references tb_board(bseq);
 select * from tb_attach;
-select fullname from tb_attach where bseq=27 order by regdate;
+
 
 create table tb_reply(
   rseq int primary key AUTO_INCREMENT,
@@ -49,6 +49,7 @@ create table tb_reply(
   rstatus int default 0,
   datetime DATETIME default CURRENT_TIMESTAMP
 )
+desc tb_reply;
 
 alter table tb_board add constraint fk_board_useq foreign key(useq) references tb_user(useq);
 alter table tb_file add constraint fk_file_bseq foreign key(bseq) references tb_board(bseq);
@@ -62,7 +63,6 @@ show tables
 
 insert into tb_user(nick, email, pwd) values('testNick', 'test@mail.com', '0000');
 insert into tb_user(nick, email, pwd) values('test1', 'test1@mail.com', '1111');
-select nick, email, pwd from tb_user where nick='testNick';
 insert into tb_board(title, content, hit, useq) values('test post title', 'This is my first board', 0, 1 );
 select u.nick, b.bseq, b.title, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq;
 select u.nick, b.title, b.content, b.datetime, b.hit from tb_user u, tb_board b where u.useq=b.useq and b.bseq=1;

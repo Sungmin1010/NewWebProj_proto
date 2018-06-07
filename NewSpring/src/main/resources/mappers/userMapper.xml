@@ -53,5 +53,9 @@
 	<select id="getAttach" parameterType="int" resultType="string">
 	select fullname from tb_attach where bseq=#{bseq} order by regdate
 	</select>
+	
+	<insert id="insertReply" >
+	
+	</insert>
 
 </mapper>

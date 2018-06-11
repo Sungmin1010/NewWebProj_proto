@@ -66,7 +66,7 @@
 	</insert>
 	
 	<select id="list" resultType="ReplyVO">
-	select r.rseq, r.bseq, u.nick, r.comment, r.datetime 
+	select r.rseq, r.bseq, r.useq, u.nick, r.comment, r.datetime 
 	from tb_reply r, tb_user u 
 	where r.useq=u.useq and bseq=#{bseq} and rstatus=0 order by rseq desc
 	</select>
@@ -78,5 +78,15 @@
 	<update id="delete">
 	update tb_reply set rstatus = 1 where rseq=#{rseq}
 	</update>
+	
+	<select id="listPage" resultType="ReplyVO">
+	select r.rseq, r.bseq, r.useq, u.nick, r.comment, r.datetime
+	from tb_reply r, tb_user u
+	where r.useq=u.useq and bseq=#{bseq} order by rseq desc limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="countReply" resultType="int">
+	select count(bseq) from tb_reply where bseq=#{bseq}
+	</select>
 
 </mapper>

@@ -1,6 +1,8 @@
 package com.spring.example.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.example.PageMaker;
+import com.spring.example.Paging;
 import com.spring.example.biz.ReplyBiz;
 import com.spring.example.vo.ReplyVO;
 
@@ -75,6 +79,36 @@ public class ReplyController {
 		}
 		return entity;
 		
+	}
+	
+	//Paging
+	@RequestMapping(value="/{bseq}/{page}", method=RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> listPage(@PathVariable("bseq") int bseq, @PathVariable("page") int page){
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		try {
+			Paging cri = new Paging();
+			cri.setPage(page);
+			
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setPaging(cri);
+			
+			Map<String, Object>	map = new HashMap<String, Object>();
+			List<ReplyVO> list = biz.listReplyPage(bseq, cri);
+			
+			map.put("list", list);
+			
+			int replyCount = biz.count(bseq);
+			pageMaker.setTotalCount(replyCount);
+			
+			map.put("pageMaker", pageMaker);
+			
+			entity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<Map<String, Object>>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 
 }

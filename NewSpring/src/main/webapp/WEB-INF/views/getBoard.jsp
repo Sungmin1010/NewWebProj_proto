@@ -14,6 +14,9 @@
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+	
     <!-- Custom styles for this template -->
     <style type="text/css">
     	.popup {
@@ -106,7 +109,13 @@
 				
 
 			</ul>
+			
 		</div>
+		<nav aria-label="Page navigation example">
+  			<ul class="pagination justify-content-center">
+  
+  			</ul>
+  			</nav>
 		
 		<div class="justify-content-center mb-3">
 		<c:if test="${sessionScope.userInfo.nick eq vo.nick}">
@@ -124,6 +133,26 @@
 		
 		
 </main>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== style="width: 100%;" -->
@@ -142,9 +171,15 @@
         
     </script>
     <script id="replyTemplate" type=text/x-handlebars-template>
-    	<li class="list-group-item">{{useq}} <small class="text-muted">{{}}</small></p>
-		  <p class="card-text">${vo.content }</p>
+	{{#each .}}
+    	<li class='list-group-item' id='replyLi' data-rseq={{rseq}}>{{nick}} <small class='text-muted'>{{prettifyDate datetime}}</small>
+      		<p class='card-text'>{{comment}}</p>
+			
+			{{#ifCond nick}}
+			<button type='button' class='btn btn-outline-info btn-sm' id='><i class='fas fa-pencil-alt'></i></button>
+			{{/ifCond}}
 		</li>
+	{{/each}}
     </script>
     <script>
     //reply function
@@ -153,7 +188,7 @@
         	var str = "";
         	$(data).each(function(){
         		str += "<li class='list-group-item'>"+this.nick+" <small class='text-muted'> "+preDate(this.datetime)+"</small></p>"
-      		  		+  "<p class='card-text'>"+this.comment+"</p></li>";
+      		  		+  "<p class='card-text'>"+this.comment+"</p><button type='button' class='btn btn-outline-info btn-sm'><i class='fas fa-pencil-alt'></i></button></li>";
         	});
         	$("#commentList").html(str);
         });
@@ -169,9 +204,53 @@
     
     </script>
     <script>
+    Handlebars.registerHelper("prettifyDate", function(timeValue){
+    	var dateObj = new Date(timeValue);
+    	var year = dateObj.getFullYear();
+    	var month = dateObj.getMonth() +1;
+    	var date = dateObj.getDate();
+    	return year+"/"+month+"/"+date;
+    });
+    Handlebars.registerHelper("ifCond", function(v1, options){
+    	if(v1 === "${sessionScope.userInfo.nick}"){
+    		return options.fn(this);
+    	}
+    });
+    
+    var printData = function(replyArr, target, templateObject){
+    	var template = Handlebars.compile(templateObject.html());
+    	var html = template(replyArr);
+    	$("#replyLi").remove();
+    	target.html(html);
+    }
+    function printPaging(pageMaker, target){
+    	var str = "";
+    	if(pageMaker.prev){
+    		str += "<li class='page-item'><a class='page-link' href='(pageMaker.startPage-1)'>Previous</a></li>";
+    	}
+    	for( var i=pageMaker.startPage, len=pageMaker.endPage; i<= len; i++){
+    		var strClass=pageMaker.paging.page == i? 'active':'';
+    		str += "<li class='page-item " + strClass + "'>"
+    			+ "<a class='page-link' href='" + i + "'>" + i + "</a></li>";
+    	}
+    	if(pageMaker.next){
+    		str += "<li class='page-item'><a class='page-link' href='" + (pageMaker.endPage + 1) + "'>Next</a></li>";
+    	}
+    	target.html(str);
+    }
+    
+    
+    function getPage(pageInfo){
+    	$.getJSON(pageInfo, function(data){
+    		printData(data.list, $("#commentList"), $("#replyTemplate"));
+    		printPaging(data.pageMaker, $(".pagination"));
+    	});
+    }
+    </script>
+    <script>
     
     	var bseq=${vo.bseq};
-    	
+    	var replyPage = 1;
     	var template = Handlebars.compile($("#templateAttach").html());
     	
     	$.getJSON("/boards/getAttach/" +bseq, function(list){
@@ -184,14 +263,15 @@
     	});
     
     	//reply
-    	loadReplyList(bseq);
+    	//loadReplyList(bseq);
+    	getPage("/replies/" + bseq + "/1");
     	
     </script>
     <script>
     	$("#replyAddBtn").on("click", function(event){
     		var comment = $("#replyComment").val();
     		var useq = ${sessionScope.userInfo.useq};
-    		$("#replyComment").val("");
+    		
     		$.ajax({
     			type: 'post',
     			url:'/replies',
@@ -206,14 +286,25 @@
     				comment:comment
     			}),
     			success:function(result){
+    				console.log("result: " + result);
     				if(result == 'SUCCESS'){
     					alert("등록 되었습니다.");
-    					loadReplyList(bseq);
+    					replyPage = 1;
+    					getPage("/replies/" + bseq + "/" + replyPage);
+    					$("#replyComment").val("");
+    					//loadReplyList(bseq);
     				}
     			}
     		});
     		
     		
+    	});
+    	$(".pagination").on("click", "li a", function(event){
+    		event.preventDefault();
+    		console.log("stop");
+    		replyPage = $(this).attr("href");
+    		console.log(replyPage);
+    		getPage("/replies/" + bseq + "/" + replyPage);
     	});
     </script>
     

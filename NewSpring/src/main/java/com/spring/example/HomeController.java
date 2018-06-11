@@ -73,6 +73,7 @@ public class HomeController {
 		return "home";
 	}
 	
+	
 	@RequestMapping(value="/home", method=RequestMethod.POST)
 	public String login(UserVO vo, HttpSession session, HttpServletResponse resp) {
 		logger.info("Member Login !!!"+ vo);
@@ -206,7 +207,9 @@ public class HomeController {
 	public String uploadForm() {
 		return "editProfileImg";
 	}
-	
-	
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public void ajaxTest() {
+		
+	}
 	
 }

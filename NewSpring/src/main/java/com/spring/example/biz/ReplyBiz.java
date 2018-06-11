@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.example.Paging;
 import com.spring.example.dao.ReplyDao;
 import com.spring.example.vo.ReplyVO;
 
@@ -32,6 +33,14 @@ public class ReplyBiz {
 	public void removeReply(int rseq) {
 		dao.delete(rseq);
 		
+	}
+	
+	//paging
+	public List<ReplyVO> listReplyPage(int bseq, Paging cri){
+		return dao.listPage(bseq, cri);
+	}
+	public int count(int bseq) {
+		return dao.count(bseq);
 	}
 
 }

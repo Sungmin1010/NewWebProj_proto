@@ -12,8 +12,8 @@
     <title>Signin Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-	
+    <%-- <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet"> --%>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 	
@@ -46,6 +46,26 @@
   </head>
 
   <body>
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a class="navbar-brand" href="#">Always expand</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +92,7 @@
 		    <img id="popup_img">
 		  </div>
 
-     <main role="main" class="container">
+     <div class="container">
 		<div class="card-deck py-5">
 			<div class="card mb-4 box-shadow">
 				<div class="card-body">
@@ -132,34 +152,18 @@
 		
 		
 		
-</main>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== style="width: 100%;" -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <%-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
+    <%-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script> --%>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
     <script id="templateAttach" type=text/x-handlebars-template>
@@ -176,7 +180,7 @@
       		<p class='card-text'>{{comment}}</p>
 			
 			{{#ifCond nick}}
-			<button type='button' class='btn btn-outline-info btn-sm' id='><i class='fas fa-pencil-alt'></i></button>
+			<button class='btn btn-outline-info btn-sm' id='modifyBtn'><i class='fas fa-pencil-alt'></i></button>
 			{{/ifCond}}
 		</li>
 	{{/each}}
@@ -347,6 +351,10 @@
     		}
     	});
     	
+    	$("#commentList").on("click", "#replyLi button",function(){
+    		console.log("click");
+    		$("#exampleModal").modal('show');
+    	});
     	
     </script>
     

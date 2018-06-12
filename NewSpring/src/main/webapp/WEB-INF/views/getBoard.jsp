@@ -12,13 +12,12 @@
     <title>Signin Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <%-- <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet"> --%>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 	
     <!-- Custom styles for this template -->
-    <style type="text/css">
+    <!-- <style type="text/css">
     	.popup {
     		position: absolute;
     	}
@@ -36,13 +35,13 @@
     		boarder:1px;
     		margin: auto;
     	}
-    	.show {
+    	.showw {
     		position: relative;
     		max-width: 1200px;
     		max-height: 800px;
     		overflow: auto;
     	}
-    </style>
+    </style> -->
   </head>
 
   <body>
@@ -66,6 +65,16 @@
     </div>
   </div>
 </div>
+
+<!-- showImgModal -->
+<div class="modal fade" id="showImgModal" tabindex="-1" role="dialog" aria-labelledby="showImgModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <!-- <div class="modal-content"> -->
+        <img id="popup_img">
+    <!-- </div> -->
+  </div>
+</div>
+
   <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a class="navbar-brand" href="#">Always expand</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,9 +97,9 @@
     </nav>
     
     <div class="popup back" style="display:none;"></div>
-		  <div id="popup_front" class="popup front" style="display:none;">
+	<div id="popup_front" class="popup front" style="display:none;">
 		    <img id="popup_img">
-		  </div>
+	</div>
 
      <div class="container">
 		<div class="card-deck py-5">
@@ -149,21 +158,18 @@
 		</form>
 		</c:if>
 		</div>
-		
-		
-		
+		<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>		
 </div>
-
 
     <!-- Bootstrap core JavaScript
     ================================================== style="width: 100%;" -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <%-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script> --%>
-    <%-- <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script> --%>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
     <script id="templateAttach" type=text/x-handlebars-template>
@@ -315,6 +321,7 @@
     <script>
     	$("#uploadedList").on("click", "#file", function(event){
     		
+    		
     		var fileLink = $(this).attr("href");
     		if(checkImageType(fileLink)){
     			event.preventDefault();
@@ -322,13 +329,13 @@
     			imgTag.attr("src", fileLink);
     			
     			console.log(imgTag.attr("src"));
-    			
-    			$(".popup").show('slow');
-    			imgTag.addClass("show");
+    			$("#showImgModal").modal('show');
+    			//$(".popup").show('slow');
+    			//imgTag.addClass("show");
     		}
     	});
     	$("#popup_img").on("click", function(){
-    		$(".popup").hide('slow');
+    		$(".popup").hide('sloww');
     	});
     	
     	//delete board

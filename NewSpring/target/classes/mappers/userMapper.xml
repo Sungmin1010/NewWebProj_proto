@@ -82,7 +82,7 @@
 	<select id="listPage" resultType="ReplyVO">
 	select r.rseq, r.bseq, r.useq, u.nick, r.comment, r.datetime
 	from tb_reply r, tb_user u
-	where r.useq=u.useq and bseq=#{bseq} order by rseq desc limit #{cri.pageStart}, #{cri.perPageNum}
+	where r.useq=u.useq and bseq=#{bseq} and rstatus=0 order by rseq desc limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="countReply" resultType="int">

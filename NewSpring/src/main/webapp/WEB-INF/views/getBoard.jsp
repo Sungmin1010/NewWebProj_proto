@@ -45,22 +45,24 @@
   </head>
 
   <body>
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <!--Reply Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">댓글 수정하기</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <p><input type="text" id="replytext" class="form-control"></p>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="replyModBtn">Modify</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        
       </div>
     </div>
   </div>
@@ -159,9 +161,9 @@
 		</c:if>
 		</div>
 		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#replyModal">
   Launch demo modal
-</button>		
+</button> -->		
 </div>
 
     <!-- Bootstrap core JavaScript
@@ -254,6 +256,8 @@
     	$.getJSON(pageInfo, function(data){
     		printData(data.list, $("#commentList"), $("#replyTemplate"));
     		printPaging(data.pageMaker, $(".pagination"));
+    		
+    		$("#replyModal").modal('hide');
     	});
     }
     </script>
@@ -358,10 +362,63 @@
     		}
     	});
     	
-    	$("#commentList").on("click", "#replyLi button",function(){
-    		console.log("click");
-    		$("#exampleModal").modal('show');
+    	$("#commentList").on("click", "#replyLi",function(){
+    		var reply = $(this);
+    		var rseq = reply.attr('data-rseq');
+    		console.log(rseq);
+    		
+    		$("#replyModal").modal('show');
+    		$("#replytext").attr('data-rseq',rseq);
+    		$("#replytext").val(reply.find('p').text()).focus();
     	});
+    	
+    	$("#replyModBtn").on("click", function(){
+    		var rseq = $("#replytext").attr('data-rseq');
+    		var replytext = $("#replytext").val();
+    		
+    		$.ajax({
+    			type: 'put',
+    			url : '/replies/' + rseq,
+    			headers : {
+    				"Content-Type" : "application/json",
+    				"X-HTTP-Method-Override" : "PUT"
+    			},
+    			data : JSON.stringify({comment:replytext}),
+    			dataType : 'text',
+    			success : function(result){
+    				console.log("result : " + result);
+    				if(result == 'SUCCESS'){
+    					alert("수정 되었습니다.");
+    					//$("#replyModal").modal('hide');
+    					getPage("/replies/"+bseq+"/" + replyPage);
+    				}
+    			}
+    		});
+    		
+    	});
+    	$("#replyDelBtn").on("click", function(){
+    		var rseq = $("#replytext").attr('data-rseq');
+    		
+    		$.ajax({
+    			type: 'delete',
+    			url: '/replies/' + rseq,
+    			headers: {
+    				"Content-Type" : "application/json",
+    				"X-HTTP-Method-Override" : "DELETE"
+    			},
+    			dataType: 'text',
+    			success: function(result){
+    				console.log("result : " + result);
+    				if(result == 'SUCCESS'){
+    					alert("삭제 되었습니다.");
+    					//$("#replyModal").modal('hide');
+    					getPage("/replies/" + bseq + "/" + replyPage);
+    				}
+    			}
+    		});
+    	});
+    	
+    
     	
     </script>
     

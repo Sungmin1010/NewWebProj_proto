@@ -13,14 +13,16 @@ public class MessageServiceImpl implements MessageService {
 	
 	@Override
 	public void addMessage(MessageVO vo) throws Exception {
-		// TODO Auto-generated method stub
+		messageDAO.create(vo);
+		pointDAO.updatePoint(vo.getSender(), 10);
 
 	}
 
 	@Override
 	public MessageVO readMessage(String uid, int mid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		messageDAO.updateState(mid);
+		pointDAO.updatePoint(uid, 5);
+		return messageDAO.readMessage(mid);
 	}
 
 }

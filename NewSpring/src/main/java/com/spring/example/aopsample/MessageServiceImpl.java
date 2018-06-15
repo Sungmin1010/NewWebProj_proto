@@ -2,6 +2,7 @@ package com.spring.example.aopsample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -11,6 +12,7 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private PointDAO pointDAO;
 	
+	@Transactional
 	@Override
 	public void addMessage(MessageVO vo) throws Exception {
 		messageDAO.create(vo);

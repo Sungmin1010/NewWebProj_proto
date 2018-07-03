@@ -46,7 +46,7 @@
     <div class="row">
     	<div class="col-sm-12 text-center py-5">
     	<h1 class="">Welcom Member!!</h1>
-    		<img class="rounded-circle" src="${pageContext.request.contextPath}/resources/img/sample.png" width="140" height="140"><br>
+    		<img class="rounded-circle" src="https://s3.ap-northeast-2.amazonaws.com/webtest1010/testImg.png" width="140" height="140"><br>
     		<a href="/user/edit" class="btn btn-secondary btn-sm my-2">edit</a>
     		<h2>${sessionScope.userInfo.nick}</h2>
     		<h3>${userInfo.email}</h3>
